@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .errors {display:none;}
+  </style>
+</head>
+<body>
+<p>회원데이터가 있어야 저장됨, 데이터베이스 확인</p>
+<form th:object="${memberSaveDto}" id="frmMember" class="frmMember" name="frmMember" method="POST" action="/memberCreate" style="width:640px;margin:auto 0;">
+  <div><input type="text" th:field="*{name}" style="width:100%"></div>
+  <div><input type="text" th:field="*{jumin}" style="width:100%"></div>
+  <div><input type="text" th:field="*{address}" style="width:100%"></div>
+  <p class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Message</p>
+  <div><button type="submit">등록하기</div>
+</form>
+</body>
+</html>
