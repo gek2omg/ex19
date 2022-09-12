@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <style>
-    .errors {display:none;}
-  </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <style>
+        .errors {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<p>회원데이터가 있어야 저장됨, 데이터베이스 확인</p>
+<p>이름을 입력을 하지 않고 등록해보기</p>
 <form th:object="${memberSaveDto}" id="frmMember" class="frmMember" name="frmMember" method="POST" action="/memberCreate" style="width:640px;margin:auto 0;">
-  <div><input type="text" th:field="*{name}" style="width:100%"></div>
-  <div><input type="text" th:field="*{jumin}" style="width:100%"></div>
-  <div><input type="text" th:field="*{address}" style="width:100%"></div>
-  <p class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Message</p>
-  <div><button type="submit">등록하기</div>
+    <div>이름 : <input type="text" th:field="*{name}" style="width:100%"></div>
+    <div>주민번호 : <input type="text" th:field="*{jumin}" style="width:100%"></div>
+    <div>주소 : <input type="text" th:field="*{address}" style="width:100%"></div>
+    <p class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Message</p>
+    <div>
+        <button type="submit">등록하기
+    </div>
 </form>
+<script>
+    window.onload = function () {
+        let error = $(".errors").html();
+        if (error !== undefined) alert(error);
+    }
+</script>
 </body>
 </html>
