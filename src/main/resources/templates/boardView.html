@@ -16,6 +16,6 @@
 <div><h1 th:text="${board.title}">제목</h1></div>
 <div><h3 th:text="${board.memberName}">작성자</h3></div>
 <div th:utext="${board.content}">내용</div>
-<div><a href="/boardList">목록</a> , <a href="/boardCreate">글작성</a></div>
+<div><a href="/boardList">목록</a> , <a href="/boardCreate">글작성</a> ,  , <a th:href="@{/boardModify/{id}(id=${board.id})}">글수정</a></div>
 </body>
 </html>

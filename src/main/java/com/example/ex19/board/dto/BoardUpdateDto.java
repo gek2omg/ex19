@@ -4,9 +4,12 @@ import com.example.ex19.member.entity.Member;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 @Data
-public class BoardSaveDto {
+public class BoardUpdateDto {
+    @Positive(message = "잘못된 경로 입니다.")
+    private Long id;
 
     @NotEmpty(message = "제목은 필수 입력입니다.")
     private String title;
@@ -14,7 +17,7 @@ public class BoardSaveDto {
     @NotEmpty(message = "제목은 필수 입력입니다.")
     private String content;
 
-    private Member member;
+    private String wbnonce;
 
 //    @AssertFalse : false 값만 통과 가능
 //    @AssertTrue : true 값만 통과 가능

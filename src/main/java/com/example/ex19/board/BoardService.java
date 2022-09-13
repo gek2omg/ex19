@@ -1,9 +1,6 @@
 package com.example.ex19.board;
 
-import com.example.ex19.board.dto.BoardListDto;
-import com.example.ex19.board.dto.BoardSaveDto;
-import com.example.ex19.board.dto.BoardSearchDto;
-import com.example.ex19.board.dto.BoardViewDto;
+import com.example.ex19.board.dto.*;
 import com.example.ex19.board.entity.Board;
 import com.example.ex19.member.MemberRepository;
 import com.example.ex19.member.entity.Member;
@@ -36,6 +33,7 @@ public class BoardService {
 
         Board board = Board.saveBoard(member, boardSaveDto);
 
+        // 순수 JPA 사용
         boardRepository.save(board);
     }
 
@@ -51,6 +49,41 @@ public class BoardService {
     public BoardViewDto searchFindOne(Long id) {
 
         return boardRepository.searchFindOne(id);
+    }
+
+
+    public Board searchFindId(Long id) {
+
+        // 순수 JPA 사용
+        Board board = boardRepository.findById(id).get();
+
+        return board;
+    }
+
+
+    @Transactional
+    public void updateBoardV1(BoardUpdateDto boardUpdateDto) {
+
+        Long memberId = 1L; // 회원 시퀀스 임시 적용(세션, 쿠키, OAuth2.0 키로 대응)
+
+        Member member = null;
+
+        try {
+            member = memberRepository.findById(memberId).get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        // board id 가 있는 경우 JPA 에서 자동으로 업데이트 진행
+        Board board = new Board();
+
+        board.setId(boardUpdateDto.getId());
+        board.setTitle(boardUpdateDto.getTitle());
+        board.setContent(boardUpdateDto.getContent());
+//        board.setMember(member);
+
+        // 순수 JPA 사용
+        boardRepository.save(board);
     }
 
 }

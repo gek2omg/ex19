@@ -3,6 +3,8 @@ package com.example.ex19.board;
 import com.example.ex19.board.dto.BoardListDto;
 import com.example.ex19.board.dto.BoardSaveDto;
 import com.example.ex19.board.dto.BoardSearchDto;
+import com.example.ex19.board.dto.BoardUpdateDto;
+import com.example.ex19.board.entity.Board;
 import com.example.ex19.member.dto.MemberSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -80,9 +82,32 @@ public class BoardController {
 
     @GetMapping("/boardView/{boardId}")
     public String boardView(@PathVariable("boardId") Long id, Model model) {
-
         model.addAttribute("board", boardService.searchFindOne(id));
 
         return "boardView";
     }
+
+    @GetMapping("/boardModify/{boardId}")
+    public String boardModify(@PathVariable("boardId") Long id, Model model) {
+        Board board =  boardService.searchFindId(id);
+
+        model.addAttribute("boardUpdateDto", board);
+
+        return "boardModify";
+    }
+
+
+    @PostMapping("/boardUpdate")
+    public String boardModifyProc(@Validated @ModelAttribute BoardUpdateDto boardUpdateDto,
+                                  BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "boardModify";
+        }
+
+        boardService.updateBoardV1(boardUpdateDto);
+
+        return "redirect:/boardList";
+    }
+
 }
