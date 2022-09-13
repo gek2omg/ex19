@@ -59,7 +59,7 @@ public class BoardController {
         // 총페이지 보다 많은 페이지를 요청한 경우
         if(pageable.getPageNumber() > boards.getTotalPages()) {
             model.addAttribute("alertMsg", "요청하신 페이지번호는 없습니다.");
-            model.addAttribute("redirectUrl", "/board/notice/list");
+            model.addAttribute("redirectUrl", "/boardList");
             return "error/alert";
         }
 
