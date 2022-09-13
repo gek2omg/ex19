@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class MemberSaveDto {
 
+
     @NotEmpty(message = "이름은 필수 입력입니다.")
     @Column(nullable = false, length = 32)
     private String name;

@@ -7,8 +7,12 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 public class BoardSaveDto {
+
     @NotEmpty(message = "제목은 필수 입력입니다.")
     private String title;
+
+    @NotEmpty(message = "제목은 필수 입력입니다.")
     private String content;
+
     private Member member;
 }

@@ -1,13 +1,16 @@
 package com.example.ex19.board;
 
+import com.example.ex19.board.dto.BoardListDto;
 import com.example.ex19.board.dto.BoardSaveDto;
+import com.example.ex19.board.dto.BoardSearchDto;
 import com.example.ex19.board.entity.Board;
 import com.example.ex19.member.MemberRepository;
 import com.example.ex19.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,4 +37,13 @@ public class BoardService {
 
         boardRepository.save(board);
     }
+
+
+    @Transactional(readOnly = true)
+    public Page<BoardListDto> searchFindAllV1(BoardSearchDto boardSearchDto, Pageable pageable) {
+
+
+        return boardRepository.searchFindAllV1(boardSearchDto, pageable);
+    }
+
 }
