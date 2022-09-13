@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -78,7 +75,14 @@ public class BoardController {
         model.addAttribute("maxPage", 10);
 
         return "boardlist";
+    }
 
 
+    @GetMapping("/boardView/{boardId}")
+    public String boardView(@PathVariable("boardId") Long id, Model model) {
+
+        model.addAttribute("board", boardService.searchFindOne(id));
+
+        return "boardView";
     }
 }

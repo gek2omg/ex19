@@ -3,6 +3,7 @@ package com.example.ex19.board;
 import com.example.ex19.board.dto.BoardListDto;
 import com.example.ex19.board.dto.BoardSaveDto;
 import com.example.ex19.board.dto.BoardSearchDto;
+import com.example.ex19.board.dto.BoardViewDto;
 import com.example.ex19.board.entity.Board;
 import com.example.ex19.member.MemberRepository;
 import com.example.ex19.member.entity.Member;
@@ -44,6 +45,12 @@ public class BoardService {
 
 
         return boardRepository.searchFindAllV1(boardSearchDto, pageable);
+    }
+
+
+    public BoardViewDto searchFindOne(Long id) {
+
+        return boardRepository.searchFindOne(id);
     }
 
 }

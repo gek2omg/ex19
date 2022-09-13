@@ -1,9 +1,6 @@
 package com.example.ex19.board;
 
-import com.example.ex19.board.dto.BoardListDto;
-import com.example.ex19.board.dto.BoardSearchDto;
-import com.example.ex19.board.dto.QBoardListDto;
-import com.example.ex19.board.entity.Board;
+import com.example.ex19.board.dto.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -31,6 +28,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     @Override
     public Page<BoardListDto> searchFindAllV1(BoardSearchDto boardSearchDto, Pageable pageable) {
 
+        // Dto 에 @QueryProjection 생성
         List<BoardListDto> content = jpaQueryFactory
                 .select(new QBoardListDto(
                         board.id,
@@ -84,6 +82,34 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         }
 
         return builder;
+    }
+
+
+    @Override
+    public BoardViewDto searchFindOne(Long id) {
+        // Dto 에 @QueryProjection 생성
+        BoardViewDto content = null;
+
+        try {
+            content = jpaQueryFactory
+                    .select(new QBoardViewDto(
+                            board.id,
+                            board.title,
+                            board.content,
+                            member.name
+                    ))
+                    .from(board)
+                    .leftJoin(board.member, member)
+                    .where(
+                            board.id.eq(id)
+                    )
+                    .fetchOne();
+
+        } catch (Exception e) {
+            System.out.println("번호에 해당하는 내용이 없습니다.");
+        }
+
+        return content;
     }
 
 
