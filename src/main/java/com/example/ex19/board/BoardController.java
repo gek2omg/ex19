@@ -115,7 +115,7 @@ public class BoardController {
 
 
 
-    @GetMapping("/api/notice")
+    @GetMapping("/api/notice/v1")
     @ResponseBody
     public List<BoardListApiDto> boardListApi(BoardSearchDto boardSearchDto,
                                               @RequestParam("page") Optional<Integer> page,
@@ -129,7 +129,7 @@ public class BoardController {
     }
 
 
-    @GetMapping("/api/noticev2")
+    @GetMapping("/api/notice/v2")
     @ResponseBody
     public Result boardListApiV2(BoardSearchDto boardSearchDto,
                                               @RequestParam("page") Optional<Integer> page,
