@@ -1,11 +1,11 @@
 package com.example.ex19.board;
 
+import com.example.ex19.board.api.BoardListApiDto;
 import com.example.ex19.board.dto.BoardListDto;
 import com.example.ex19.board.dto.BoardSaveDto;
 import com.example.ex19.board.dto.BoardSearchDto;
 import com.example.ex19.board.dto.BoardUpdateDto;
 import com.example.ex19.board.entity.Board;
-import com.example.ex19.member.dto.MemberSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -108,6 +109,21 @@ public class BoardController {
         boardService.updateBoardV1(boardUpdateDto);
 
         return "redirect:/boardList";
+    }
+
+
+
+    @GetMapping("/api/notice")
+    @ResponseBody
+    public List<BoardListApiDto> boardListApi(BoardSearchDto boardSearchDto,
+                                              @RequestParam("page") Optional<Integer> page,
+                                              @RequestParam("size") Optional<Integer> size,
+                                              Model model) {
+
+        PageRequest pageable = PageRequest.of(page.isPresent() ? page.get() : 0, size.isPresent() ? size.get() : 10);
+        List<BoardListApiDto> boardListApiDtos = boardService.searchFindAllApiV1(boardSearchDto, pageable);
+
+        return boardListApiDtos;
     }
 
 }

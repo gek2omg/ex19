@@ -1,5 +1,7 @@
 package com.example.ex19.board;
 
+import com.example.ex19.board.api.BoardListApiDto;
+import com.example.ex19.board.api.QBoardListApiDto;
 import com.example.ex19.board.dto.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -55,6 +57,29 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .fetch().get(0);
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+
+    @Override
+    public List<BoardListApiDto> searchFindAllApiV1(BoardSearchDto boardSearchDto, Pageable pageable) {
+
+        List<BoardListApiDto> content = jpaQueryFactory
+                .select(new QBoardListApiDto(
+                        board.id,
+                        board.title,
+                        member.name
+                ))
+                .from(board)
+                .leftJoin(board.member, member)
+                .where(
+                        searchFindAllV1Predicate(boardSearchDto)
+                )
+                .orderBy(board.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return content;
     }
 
 

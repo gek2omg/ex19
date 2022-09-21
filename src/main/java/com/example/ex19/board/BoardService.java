@@ -1,5 +1,6 @@
 package com.example.ex19.board;
 
+import com.example.ex19.board.api.BoardListApiDto;
 import com.example.ex19.board.dto.*;
 import com.example.ex19.board.entity.Board;
 import com.example.ex19.member.MemberRepository;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +46,13 @@ public class BoardService {
 
 
         return boardRepository.searchFindAllV1(boardSearchDto, pageable);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<BoardListApiDto> searchFindAllApiV1(BoardSearchDto boardSearchDto, Pageable pageable) {
+
+        return boardRepository.searchFindAllApiV1(boardSearchDto, pageable);
     }
 
 
