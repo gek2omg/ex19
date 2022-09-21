@@ -6,6 +6,8 @@ import com.example.ex19.board.dto.BoardSaveDto;
 import com.example.ex19.board.dto.BoardSearchDto;
 import com.example.ex19.board.dto.BoardUpdateDto;
 import com.example.ex19.board.entity.Board;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -124,6 +126,27 @@ public class BoardController {
         List<BoardListApiDto> boardListApiDtos = boardService.searchFindAllApiV1(boardSearchDto, pageable);
 
         return boardListApiDtos;
+    }
+
+
+    @GetMapping("/api/noticev2")
+    @ResponseBody
+    public Result boardListApiV2(BoardSearchDto boardSearchDto,
+                                              @RequestParam("page") Optional<Integer> page,
+                                              @RequestParam("size") Optional<Integer> size,
+                                              Model model) {
+
+        PageRequest pageable = PageRequest.of(page.isPresent() ? page.get() : 0, size.isPresent() ? size.get() : 10);
+        List<BoardListApiDto> boardListApiDtos = boardService.searchFindAllApiV1(boardSearchDto, pageable);
+
+        return new Result(boardListApiDtos,"SUCCESS");
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private T data;
+        private String msg;
     }
 
 }
