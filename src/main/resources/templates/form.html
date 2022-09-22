@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <style>
+        div {border: 1px;border-color: #8e0606;}
+        p {border: 1px;border-color: #1a1a1a;}
+
+    </style>
+</head>
+<body>
+<form id="frmMarket" class="frmMarket" name="frmMarket" method="POST" action="/form/form_proc">
+    <input type="text" name="productTitle" value="">
+    <select id="cat1" name="cat1">
+        <option value="">선택</option>
+        <option value="1" data-name="카테고리1">카테고리 > 1</option>
+        <option value="2" data-name="카테고리2">카테고리 > 2</option>
+    </select>
+    <select id="cat2" name="cat2">
+        <option value="">선택</option>
+        <option value="3" data-name="카테고리21">카테고리 2-1</option>
+        <option value="4" data-name="카테고리22">카테고리 2-2</option>
+    </select>
+    <button id="btnSelect">선택</button>
+    <div id="selectCategory">선택된 카테고리</div>
+    <button type="submit" id="btnSubmitAjax">AJAX 등록</button>
+    <button id="btnSubmitFetch">FETCH 등록</button>
+</form>
+<script>
+    var selectCategory = [];
+    var acnt = 0;
+
+document.querySelector("#btnSelect").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    let HTML = "";
+
+    let cat1 = $("select[name=cat1]").val();
+    let cat1_name = $("select[name='cat1'] option:selected").text();
+    let cat1_data = $("select[name='cat1'] option:selected").data("name");
+    let cat2 = $("#cat2").val();
+    let cat2_name = $("select[name='cat2'] option:selected").text();
+    let cat2_data = $("select[name='cat2'] option:selected").data("name");
+
+    if(cat1 != "" && cat2 != "") {
+        console.log(cat1, cat1_name, cat1_data);
+        console.log(cat2, cat2_name, cat2_data);
+        selectCategory.push({
+            cid1: cat1,
+            cname1: cat1_name,
+            cdata1: cat1_data,
+            cid2: cat2,
+            cname2: cat2_name,
+            cdata2: cat2_data
+        });
+
+    } else if(cat1 != "") {
+        console.log(cat1, cat1_name, cat1_data);
+    } else if(cat2 != "") {
+        console.log(cat2, cat2_name, cat2_data);
+    } else {
+        // 선택 카테고리가 없는 경우
+        console.log("선택 카테고리가 없습니다.");
+    }
+
+    selectCategoryList();
+});
+
+
+function selectCategoryList() {
+    let HTML = "";
+
+    selectCategory.forEach(function(v, i) {
+        HTML += `<p id="selCat${i}">${v.cid1} ${v.cname1} ${v.cid2} ${v.cname2} <a href="javascript:;" onclick="btnCategoryRemove('${i}')">X</a></p>`;
+    });
+
+    $("#selectCategory").html(HTML);
+
+}
+
+
+document.querySelector("#btnSubmitAjax").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    let sample = ["A", "B"];
+
+    let frm = document.getElementById("frmMarket");
+    let formData = new FormData(frm);
+
+    // console.log( JSON.stringify(selectCategory) );
+    // $("#sel").val( JSON.stringify(selectCategory) );
+
+    formData.append("selectCategory", JSON.stringify(selectCategory) );
+    formData.append("sample", sample );
+
+    $.ajax({
+        type: "POST",
+        url: "/form/form_proc",
+        data: formData,
+        // traditional: true,
+        dataType: "JSON",
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            console.log("Ajax -------------------");
+            console.log(data);
+            console.log("-------------------");
+            console.log(data.selectCategory);
+            console.log("-------------------");
+            console.log(data.sample);
+        }
+    });
+});
+
+
+document.querySelector("#frmMarket").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let HTML = "";
+
+    let sample = ["A", "B"];
+
+    let frm = document.getElementById("frmMarket");
+    let formData = new FormData(frm);
+
+    // console.log( JSON.stringify(selectCategory) );
+    // $("#sel").val( JSON.stringify(selectCategory) );
+
+    formData.append( "selectCategory", JSON.stringify(selectCategory) );
+    formData.append( "sample", sample );
+
+    fetch("/form/form_proc", {
+        method: "POST",
+        body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("Fetch -------------------");
+        console.log(data);
+        console.log("-------------------");
+        console.log(data.selectCategory);
+        console.log("-------------------");
+        console.log(data.sample);
+    })
+    .catch((error) => {
+        alert("오류가 발생했습니다:" + error);
+        console.log(error)
+    })
+
+});
+
+
+function btnCategoryRemove(cid) {
+    $("#selCat"+cid).remove();
+    selectCategory.splice(cid, 1);
+    selectCategoryList();
+}
+</script>
+</body>
+</html>
