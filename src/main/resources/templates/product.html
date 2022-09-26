@@ -12,7 +12,8 @@
 </head>
 <body>
 <form id="frmMarket" class="frmMarket" name="frmMarket" method="POST" action="/form/form_proc">
-    <input type="text" name="productTitle" value="">
+    <input type="text" name="name" value="" placeholder="상품명">
+    <input type="text" name="price" value="" placeholder="금액">
     <select id="cat1" name="cat1">
         <option value="">선택</option>
         <option value="1" data-name="카테고리1">카테고리 > 1</option>
@@ -94,7 +95,7 @@ document.querySelector("#btnSubmitAjax").addEventListener("click", function(even
 
     $.ajax({
         type: "POST",
-        url: "/form/form_proc",
+        url: "/product/form_proc",
         data: formData,
         // traditional: true,
         dataType: "JSON",
@@ -123,7 +124,7 @@ document.querySelector("#frmMarket").addEventListener("submit", function(event) 
 
     formData.append( "selectCategory", JSON.stringify(selectCategory) );
 
-    fetch("/form/form_proc", {
+    fetch("/product/form_proc", {
         method: "POST",
         body: formData
     })
