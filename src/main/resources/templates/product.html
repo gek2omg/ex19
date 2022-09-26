@@ -149,8 +149,11 @@ function btnCategoryRemove(cid) {
 function getCategoryList(parent_id, id_name) {
     let HTML = "<option>선택</option>";
 
+    if(parent_id === "") parent_id = 0;
+    if(id_name === "") id_name = "cat1";
+
     $.ajax({
-        url: "/API/category/"+parent_id,
+        url: "/API/category/" + parent_id,
         type: "GET",
         dataType: "JSON",
         contentType: false,
@@ -160,7 +163,7 @@ function getCategoryList(parent_id, id_name) {
                 HTML += `<option value="${item.categoryId}">${item.name}</option>`;
             });
 
-            $("#"+id_name).html(HTML);
+            $("#" + id_name).html(HTML);
         }
     });
 }
