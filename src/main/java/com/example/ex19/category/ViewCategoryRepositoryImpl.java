@@ -19,7 +19,6 @@ public class ViewCategoryRepositoryImpl implements ViewCategoryRepositoryCustom 
 
     public ViewCategoryRepositoryImpl(EntityManager em) {
 
-
         this.jpaQueryFactory = new JPAQueryFactory(em);
     }
 
@@ -69,8 +68,6 @@ public class ViewCategoryRepositoryImpl implements ViewCategoryRepositoryCustom 
                         searchFindAllByParentIdPredicate(parent_id)
                 )
                 .fetch();
-
-
 
         return content;
     }
