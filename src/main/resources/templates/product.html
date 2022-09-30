@@ -7,12 +7,15 @@
     <style>
         div {border: 1px;border-color: #8e0606;}
         p {border: 1px;border-color: #1a1a1a;}
-
+        .errors {
+            display: none;
+        }
     </style>
 </head>
 <body>
-<form id="frmMarket" class="frmMarket" name="frmMarket" method="POST" action="/form/form_proc">
+<form th:object="${productSaveDto}" id="frmMarket" class="frmMarket" name="frmMarket" method="POST" action="/form/form_proc">
     <input type="text" name="name" value="" placeholder="상품명">
+    <p class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error Message</p>
     <input type="text" name="price" value="" placeholder="금액">
     <select id="cat1" name="cat1">
         <option value="">선택</option>
@@ -179,6 +182,11 @@ document.querySelector("#cat1").addEventListener("change", function() {
 $(document).ready(function() {
     getCategoryList(0, "cat1");
 });
+
+window.onload = function () {
+    let error = $(".errors").html();
+    if (error !== undefined) alert(error);
+}
 </script>
 </body>
 </html>

@@ -108,7 +108,7 @@ public class BoardController {
             return "boardModify";
         }
 
-        boardService.updateBoardV1(boardUpdateDto);
+        String msg = boardService.updateBoardV2(boardUpdateDto);
 
         return "redirect:/boardList";
     }

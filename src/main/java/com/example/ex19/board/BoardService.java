@@ -96,4 +96,32 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+
+    @Transactional
+    public String updateBoardV2(BoardUpdateDto boardUpdateDto) {
+
+        Long memberId = 1L;
+
+        Member member = null;
+        Board board = null;
+
+        try {
+            member = memberRepository.findById(memberId).get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            board = boardRepository.findById(boardUpdateDto.getId()).orElse(null);
+
+            board.setTitle(boardUpdateDto.getTitle());
+            board.setContent(boardUpdateDto.getContent());
+
+            return "SUCCESS";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
