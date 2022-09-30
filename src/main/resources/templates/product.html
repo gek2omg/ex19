@@ -101,10 +101,18 @@ document.querySelector("#btnSubmitAjax").addEventListener("click", function(even
         contentType: false,
         processData: false,
         success: function(data) {
-            console.log("Ajax -------------------");
-            console.log(data);
-            console.log("-------------------");
-            console.log(data.msg);
+            if(data.message !== "SUCCESS") {
+                alert(data.info[0].defaultMessage);
+                return;
+            } else {
+                console.log("Ajax -------------------");
+                console.log(data);
+                console.log("-------------------");
+                console.log(data.msg);
+            }
+        },
+        error: function(request, status, error) {
+            return alert(error);
         }
     });
 });
