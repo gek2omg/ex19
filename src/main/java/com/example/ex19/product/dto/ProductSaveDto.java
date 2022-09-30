@@ -1,6 +1,5 @@
 package com.example.ex19.product.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
