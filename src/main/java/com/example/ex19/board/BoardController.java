@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -139,7 +140,7 @@ public class BoardController {
         PageRequest pageable = PageRequest.of(page.isPresent() ? page.get() : 0, size.isPresent() ? size.get() : 10);
         List<BoardListApiDto> boardListApiDtos = boardService.searchFindAllApiV1(boardSearchDto, pageable);
 
-        return new Result(boardListApiDtos,"SUCCESS");
+        return new Result(boardListApiDtos,"SUCCESS", HttpStatus.OK);
     }
 
     @Data
@@ -147,6 +148,7 @@ public class BoardController {
     static class Result<T> {
         private T data;
         private String msg;
+        private HttpStatus code;
     }
 
 }
