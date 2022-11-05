@@ -2,6 +2,7 @@ package com.example.ex19.board.entity;
 
 import com.example.ex19.board.dto.BoardSaveDto;
 import com.example.ex19.member.entity.Member;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Board {
     // FetchType 는 무조건 LAZY 타입으로 사용
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", updatable = false)
+    @JsonBackReference
     private Member member;
 
     @Column(nullable = false, length = 128)

@@ -124,4 +124,19 @@ public class BoardService {
 
     }
 
+    public Board findById(long id) {
+
+        Board board = boardRepository.findById(id).get();
+
+        return board;
+    }
+
+    public BoardViewDto testFindById(long id) {
+
+        BoardViewDto board = null;
+
+        board = boardRepository.searchFindOne(id);
+
+        return board;
+    }
 }

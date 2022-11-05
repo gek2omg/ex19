@@ -4,6 +4,7 @@ import com.example.ex19.board.api.BoardListApiDto;
 import com.example.ex19.board.dto.BoardListDto;
 import com.example.ex19.board.dto.BoardSearchDto;
 import com.example.ex19.board.dto.BoardViewDto;
+import com.example.ex19.board.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +18,5 @@ public interface BoardRepositoryCustom {
     BoardViewDto searchFindOne(Long id);
 
     List<BoardListApiDto> searchFindAllApiV1(BoardSearchDto boardSearchDto, Pageable pageable);
+
 }
