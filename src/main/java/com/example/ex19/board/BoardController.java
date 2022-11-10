@@ -150,7 +150,7 @@ public class BoardController {
 
         board = boardService.searchFindOne(1L);
 
-        return new Result(board, "SUCCESS");
+        return new Result(board, "SUCCESS", HttpStatus.OK);
     }
 
     @Data
