@@ -1,6 +1,7 @@
 package com.example.ex19.member.entity;
 
 import com.example.ex19.board.entity.Board;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,5 +31,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     @Column(nullable = true)
+    @JsonManagedReference
     private List<Board> boards = new ArrayList<>();
 }

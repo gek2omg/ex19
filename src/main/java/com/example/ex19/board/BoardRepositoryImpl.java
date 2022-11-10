@@ -3,9 +3,11 @@ package com.example.ex19.board;
 import com.example.ex19.board.api.BoardListApiDto;
 import com.example.ex19.board.api.QBoardListApiDto;
 import com.example.ex19.board.dto.*;
+import com.example.ex19.board.entity.Board;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ import static org.springframework.util.StringUtils.hasText;
 public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
+
 
     public BoardRepositoryImpl(EntityManager em) {
 
@@ -136,6 +139,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
         return content;
     }
+
+
 
 
 

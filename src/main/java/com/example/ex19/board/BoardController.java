@@ -1,10 +1,8 @@
 package com.example.ex19.board;
 
 import com.example.ex19.board.api.BoardListApiDto;
-import com.example.ex19.board.dto.BoardListDto;
-import com.example.ex19.board.dto.BoardSaveDto;
-import com.example.ex19.board.dto.BoardSearchDto;
-import com.example.ex19.board.dto.BoardUpdateDto;
+import com.example.ex19.board.api.BoardTestApi;
+import com.example.ex19.board.dto.*;
 import com.example.ex19.board.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -141,6 +139,18 @@ public class BoardController {
         List<BoardListApiDto> boardListApiDtos = boardService.searchFindAllApiV1(boardSearchDto, pageable);
 
         return new Result(boardListApiDtos,"SUCCESS", HttpStatus.OK);
+    }
+
+
+    @GetMapping("/board/find/api")
+    @ResponseBody
+    public Result searchFindTest() {
+
+        BoardViewDto board = null;
+
+        board = boardService.searchFindOne(1L);
+
+        return new Result(board, "SUCCESS");
     }
 
     @Data
